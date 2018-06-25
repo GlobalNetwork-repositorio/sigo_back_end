@@ -16,10 +16,10 @@ public class MedioPago implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="idmedio")
+	@Column(name="id_medio_pago")
 	private Integer idMedioPago;
 
-	@Column(name="descripcion")
+	@Column(name="descripcion_medio_pago")
 	private String descripcionMedioPago;
 
 	//bi-directional many-to-one association to Egreso

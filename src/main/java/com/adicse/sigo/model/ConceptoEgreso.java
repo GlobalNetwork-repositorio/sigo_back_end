@@ -16,7 +16,7 @@ public class ConceptoEgreso implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="idconceptoegreso")
+	@Column(name="id_concepto_egreso")
 	private Integer idConceptoEgreso;
 
 	private String descripcion;

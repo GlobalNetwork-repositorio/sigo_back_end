@@ -1,7 +1,10 @@
 package com.adicse.sigo.controller;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.adicse.sigo.model.Usuario;
 import com.adicse.sigo.service.UsuarioService;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
 @RequestMapping("/usuario")
@@ -23,16 +29,38 @@ public class UsuarioController {
 		return usuarioService.readAll();
 	}
 	
-	public Map<String, Object> login (@RequestBody Map <String, Object> json) {
+	@RequestMapping("/login")
+	public Map<String, Object> login (@RequestBody Map <String, Object> json) {		
 		String username = (String) json.get("username");
 		String password = (String) json.get("password");
+		Map <String, Object> response = new HashMap<String, Object>();
+		String sreturn; 	
 		
 		Usuario usuario = usuarioService.getUsuarioByCredenciales(username, password);
 		
+			
 		if ( usuario != null ) {
 			
+			Map <String, Object> claims = new HashMap<String, Object>();
+			claims.put("role", "admin");
+			
+			String s = Jwts.builder().setSubject(username)				
+					.setClaims(claims)
+					.setIssuedAt(new Date())
+					//.setExpiration(expirationTime)
+					.signWith(SignatureAlgorithm.HS256, "secretkey").compact();
+
+			sreturn = "okkk";
+			
+			response.put("token", s);
+			response.put("sucess", true);
+			response.put("msg", sreturn);
+		} else {
+			sreturn = "Login incorrecto";
+			response.put("sucess", false);
+			response.put("msg", sreturn);
 		}
 		
-		return null;
+		return response;
 	}
 }

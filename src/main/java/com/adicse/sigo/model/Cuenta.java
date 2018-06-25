@@ -16,7 +16,7 @@ public class Cuenta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="idcuenta")
+	@Column(name="id_cuenta")
 	private Integer idCuenta;
 
 	private String banco;
