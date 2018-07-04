@@ -17,10 +17,12 @@ public class ConceptoEgresoService implements IAdicseCustom<ConceptoEgreso, Inte
 
 	@Autowired
 	private IConceptoEgresoDao iConceptoEgresoDao;
-	
+		
 	@Override
 	public ConceptoEgreso create(ConceptoEgreso entidad) {
 		// TODO Auto-generated method stub
+		Integer IdMax = iConceptoEgresoDao.maxId() == null ? 1 : iConceptoEgresoDao.maxId() + 1 ;
+		entidad.setIdConceptoEgreso(IdMax);
 		return iConceptoEgresoDao.save(entidad);
 	}
 

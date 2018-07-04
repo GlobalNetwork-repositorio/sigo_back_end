@@ -20,7 +20,10 @@ public class MedioPagoService implements IAdicseCustom<MedioPago, Integer>{
 	
 	@Override
 	public MedioPago create(MedioPago entidad) {
-		// TODO Auto-generated method stub
+		
+		Integer IdMax = iMedioPagoDao.maxId() == null ? 1 : iMedioPagoDao.maxId() + 1 ;
+		entidad.setIdMedioPago(IdMax);
+		
 		return iMedioPagoDao.save(entidad);
 	}
 

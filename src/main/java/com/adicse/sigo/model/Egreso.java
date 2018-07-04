@@ -1,5 +1,4 @@
 package com.adicse.sigo.model;
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
@@ -19,11 +18,17 @@ public class Egreso implements Serializable {
 	@Column(name="id_egreso")
 	private Integer idEgreso;
 
+	private String detalles;
+
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 
-	@Temporal(TemporalType.DATE)
-	private Date hora;
+	@Column(name="fecha_registro")
+	private String fechaRegistro;
+
+	private String hora;
+
+	private String imagen;
 
 	private float monto;
 
@@ -68,6 +73,14 @@ public class Egreso implements Serializable {
 		this.idEgreso = idEgreso;
 	}
 
+	public String getDetalles() {
+		return this.detalles;
+	}
+
+	public void setDetalles(String detalles) {
+		this.detalles = detalles;
+	}
+
 	public Date getFecha() {
 		return this.fecha;
 	}
@@ -76,12 +89,28 @@ public class Egreso implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public Date getHora() {
+	public String getFechaRegistro() {
+		return this.fechaRegistro;
+	}
+
+	public void setFechaRegistro(String fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+
+	public String getHora() {
 		return this.hora;
 	}
 
-	public void setHora(Date hora) {
+	public void setHora(String hora) {
 		this.hora = hora;
+	}
+
+	public String getImagen() {
+		return this.imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
 	}
 
 	public float getMonto() {

@@ -20,7 +20,8 @@ public class AreaService implements IAdicseCustom<Area, Integer> {
 
 	@Override
 	public Area create(Area entidad) {
-	
+		Integer IdMax = iAreaDao.maxId() == null ? 1 : iAreaDao.maxId() + 1 ;
+		entidad.setIdArea(IdMax);
 		return iAreaDao.save(entidad);
 	}
 

@@ -21,7 +21,8 @@ public class UsuarioService implements IAdicseCustom<Usuario, Integer>{
 	
 	@Override
 	public Usuario create(Usuario entidad) {
-		// TODO Auto-generated method stub
+		Integer IdMax = iUsuarioDao.maxId() == null ? 1 : iUsuarioDao.maxId() + 1 ;
+		entidad.setIdUsuario(IdMax);
 		return iUsuarioDao.save(entidad);
 	}
 

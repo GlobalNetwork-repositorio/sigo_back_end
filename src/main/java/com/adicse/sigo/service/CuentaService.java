@@ -20,7 +20,8 @@ public class CuentaService implements IAdicseCustom<Cuenta, Integer> {
 
 	@Override
 	public Cuenta create(Cuenta entidad) {
-		// TODO Auto-generated method stub
+		Integer IdMax = iCuentaDao.maxId() == null ? 1 : iCuentaDao.maxId() + 1 ;
+		entidad.setIdCuenta(IdMax);
 		return iCuentaDao.save(entidad);
 	}
 

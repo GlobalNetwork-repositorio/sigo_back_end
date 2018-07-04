@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.adicse.sigo.model.Ingreso;
 import com.adicse.sigo.repo.IIngresoDao;
+import com.adicse.sigo.utilitarios.FuncionesUtilesService;
 
 @Service
 @Transactional
@@ -17,10 +18,17 @@ public class IngresoService implements IAdicseCustom<Ingreso, Integer>{
 	
 	@Autowired
 	private IIngresoDao iIngresoDao;
-
+	
+	@Autowired
+	private FuncionesUtilesService funcionesUtiles;	
+	
 	@Override
 	public Ingreso create(Ingreso entidad) {
-		// TODO Auto-generated method stub
+		
+		Integer IdMax = iIngresoDao.maxId() == null ? 1 : iIngresoDao.maxId() + 1 ;
+		entidad.setFechaRegistro(funcionesUtiles.getFechaActual().toString() + " " + funcionesUtiles.getHoraActual());
+		entidad.setIdIngreso(IdMax);
+		
 		return iIngresoDao.save(entidad);
 	}
 

@@ -2,10 +2,12 @@ package com.adicse.sigo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
+import com.adicse.sigo.model.Area;
 import com.adicse.sigo.model.MedioPago;
 import com.adicse.sigo.service.MedioPagoService;
 
@@ -20,5 +22,10 @@ public class MedioPagoController {
 	@RequestMapping("/getall")
 	public List<MedioPago>getAll(){
 		return medioPagoService.readAll();
+	}
+	
+	@RequestMapping("/save")
+	public MedioPago save( @RequestBody MedioPago entidad ) {				
+		return medioPagoService.create(entidad);
 	}
 }

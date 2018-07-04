@@ -21,6 +21,8 @@ public class SucursalService implements IAdicseCustom<Sucursal, Integer>{
 	@Override
 	public Sucursal create(Sucursal entidad) {
 		// TODO Auto-generated method stub
+		Integer IdMax = iSucursalDao.maxId() == null ? 1 : iSucursalDao.maxId() + 1 ;
+		entidad.setIdSucursal(IdMax);
 		return iSucursalDao.save(entidad);
 	}
 

@@ -10,5 +10,8 @@ public interface IUsuarioDao extends CrudRepository<Usuario, Integer>{
 	
 	@Query ("Select p from Usuario p where usuario = :username and contrasena = :password") 	
 	public Usuario getUsuarioByCredenciales ( @Param ("username") String username, @Param ("password") String password );  
+	
+	@Query("select max(idUsuario) from Usuario m")
+	public Integer maxId();
 
 }

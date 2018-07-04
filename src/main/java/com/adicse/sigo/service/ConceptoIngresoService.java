@@ -20,7 +20,8 @@ public class ConceptoIngresoService implements IAdicseCustom<ConceptoIngreso, In
 	
 	@Override
 	public ConceptoIngreso create(ConceptoIngreso entidad) {
-		// TODO Auto-generated method stub
+		Integer IdMax = iConceptoIngresoDao.maxId() == null ? 1 : iConceptoIngresoDao.maxId() + 1 ;
+		entidad.setIdConceptoIngreso(IdMax);
 		return iConceptoIngresoDao.save(entidad);
 	}
 

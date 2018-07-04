@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.adicse.sigo.model.MedioPago;
 import com.adicse.sigo.model.Usuario;
 import com.adicse.sigo.service.UsuarioService;
 
@@ -27,6 +28,11 @@ public class UsuarioController {
 	@RequestMapping("/getall")
 	public List<Usuario>getAll(){
 		return usuarioService.readAll();
+	}
+	
+	@RequestMapping("/save")
+	public Usuario save( @RequestBody Usuario entidad ) {				
+		return usuarioService.create(entidad);
 	}
 	
 	@RequestMapping("/login")
@@ -52,14 +58,17 @@ public class UsuarioController {
 
 			sreturn = "okkk";
 			
+			
+			usuario.setContrasena("!");
 			response.put("token", s);
-			response.put("sucess", true);
-			response.put("msg", sreturn);
+			response.put("sucess", true);			
 		} else {
 			sreturn = "Login incorrecto";
-			response.put("sucess", false);
-			response.put("msg", sreturn);
+			response.put("sucess", false);			
 		}
+		
+		response.put("msg", sreturn);
+		response.put("usuario", usuario);
 		
 		return response;
 	}

@@ -19,11 +19,15 @@ public class Ingreso implements Serializable {
 	@Column(name="id_ingreso")
 	private Integer idIngreso;
 
+	private String detalles;
+
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 
-	@Temporal(TemporalType.DATE)
-	private Date hora;
+	@Column(name="fecha_registro")
+	private String fechaRegistro;
+
+	private String hora;
 
 	@Column(name="monto_ingresado")
 	private float montoIngresado;
@@ -64,6 +68,14 @@ public class Ingreso implements Serializable {
 		this.idIngreso = idIngreso;
 	}
 
+	public String getDetalles() {
+		return this.detalles;
+	}
+
+	public void setDetalles(String detalles) {
+		this.detalles = detalles;
+	}
+
 	public Date getFecha() {
 		return this.fecha;
 	}
@@ -72,11 +84,19 @@ public class Ingreso implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public Date getHora() {
+	public String getFechaRegistro() {
+		return this.fechaRegistro;
+	}
+
+	public void setFechaRegistro(String fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+
+	public String getHora() {
 		return this.hora;
 	}
 
-	public void setHora(Date hora) {
+	public void setHora(String hora) {
 		this.hora = hora;
 	}
 
