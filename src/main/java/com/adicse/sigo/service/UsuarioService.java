@@ -5,12 +5,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.adicse.sigo.model.Usuario;
 import com.adicse.sigo.repo.IUsuarioDao;
+import com.adicse.sigo.specification.Filter;
 
 @Service
 @Transactional
@@ -21,35 +22,42 @@ public class UsuarioService implements IAdicseCustom<Usuario, Integer>{
 	
 	@Override
 	public Usuario create(Usuario entidad) {
-		Integer IdMax = iUsuarioDao.maxId() == null ? 1 : iUsuarioDao.maxId() + 1 ;
-		entidad.setIdUsuario(IdMax);
-		return iUsuarioDao.save(entidad);
+		if ( entidad.getIdUsuario() == 0 ) { 
+			Integer IdMax = iUsuarioDao.maxId() == null ? 1 : iUsuarioDao.maxId() + 1 ; 
+			entidad.setIdUsuario(IdMax);
+		}
+		
+		iUsuarioDao.save(entidad);
+		return entidad;
 	}
+	
 
 	@Override
-	public List<Usuario> readAll() {
-		// TODO Auto-generated method stub
-		return (List<Usuario>) iUsuarioDao.findAll();
+	public List<Usuario> readAll() {		
+		return (List<Usuario>) iUsuarioDao.findAll(sortByIdAsc());
 	}
+	
+	// orden por defecto
+	private Sort sortByIdAsc() {
+        return new Sort(Sort.Direction.ASC, "idUsuario");
+    }
 
 	@Override
 	public Usuario update(Usuario entidad) {
-		// TODO Auto-generated method stub
 		return iUsuarioDao.save(entidad);
 	}
 
 	@Override
 	public Usuario findById(Integer id) {
-		// TODO Auto-generated method stub
 		return iUsuarioDao.findById(id).get();
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		iUsuarioDao.deleteById(id);
-		
+		iUsuarioDao.deleteById(id);		
 	}
-
+	
+	
 	@Override
 	public Page<?> pagination(Integer pagenumber, Integer rows, String sortdireccion, String sortcolumn,
 			Object filter) {
@@ -72,8 +80,7 @@ public class UsuarioService implements IAdicseCustom<Usuario, Integer>{
 
 	@Override
 	public Optional<Usuario> findbyid(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return iUsuarioDao.findById(id);
 	}
 
 	@Override
@@ -84,5 +91,12 @@ public class UsuarioService implements IAdicseCustom<Usuario, Integer>{
 	
 	public Usuario getUsuarioByCredenciales ( String username, String password ) {
 		return iUsuarioDao.getUsuarioByCredenciales(username, password);
+	}
+
+	@Override
+	public Page<?> paginacion(Integer pagenumber, Integer rows, String sortdireccion, String sortcolumn,
+			Filter filter) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

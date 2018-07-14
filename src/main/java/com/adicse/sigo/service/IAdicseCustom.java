@@ -5,7 +5,11 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
+import com.adicse.sigo.specification.Filter;
+
 public interface IAdicseCustom <T, ID>{
+	
+	public Page<?> paginacion(Integer pagenumber, Integer rows, String sortdireccion, String  sortcolumn, Filter filter);
 	
 	public Page<?> pagination(Integer pagenumber, Integer rows, String sortdireccion, String  sortcolumn, Object filter );
 	
@@ -27,6 +31,6 @@ public interface IAdicseCustom <T, ID>{
 	
 	public Optional<T> findbyid(ID id);
 	
-	public Long count();
+	public Long count();	
 
 }

@@ -1,6 +1,7 @@
 package com.adicse.sigo.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.adicse.sigo.model.Cuenta;
+import com.adicse.sigo.model.Egreso;
 import com.adicse.sigo.repo.ICuentaDao;
+import com.adicse.sigo.specification.Filter;
 
 @Service
 @Transactional
@@ -77,6 +80,13 @@ public class CuentaService implements IAdicseCustom<Cuenta, Integer> {
 
 	@Override
 	public Long count() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<?> paginacion(Integer pagenumber, Integer rows, String sortdireccion, String sortcolumn,
+			Filter filter) {
 		// TODO Auto-generated method stub
 		return null;
 	}

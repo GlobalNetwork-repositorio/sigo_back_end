@@ -1,7 +1,12 @@
 package com.adicse.sigo.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -23,12 +28,14 @@ public class Usuario implements Serializable {
 
 	private String direccion;
 
-	@Temporal(TemporalType.DATE)
+	// @Temporal(TemporalType.DATE)	
 	@Column(name="fecha_ingreso")
+	@JsonFormat (pattern ="dd/MM/yyyy", timezone="EST")
 	private Date fechaIngreso;
 
-	@Temporal(TemporalType.DATE)
+	// @Temporal(TemporalType.DATE)	
 	@Column(name="fecha_nacimiento")
+	@JsonFormat (pattern ="dd/MM/yyyy", timezone="EST")
 	private Date fechaNacimiento;
 
 	@Column(name="nombre_apellido")
@@ -86,14 +93,18 @@ public class Usuario implements Serializable {
 	}
 
 	public Date getFechaIngreso() {
+		// SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		// return sdf.format(this.fechaIngreso);
 		return this.fechaIngreso;
 	}
 
-	public void setFechaIngreso(Date fechaIngreso) {
+	public void setFechaIngreso(Date fechaIngreso) {		
 		this.fechaIngreso = fechaIngreso;
 	}
 
 	public Date getFechaNacimiento() {
+		//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		// return sdf.format(this.fechaNacimiento);
 		return this.fechaNacimiento;
 	}
 

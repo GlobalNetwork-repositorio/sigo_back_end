@@ -2,9 +2,11 @@ package com.adicse.sigo.controller;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,46 +21,34 @@ public class ProveedorController {
 	private ProveedorService proveedorService;
 
 	
-	//paginacion
-	@RequestMapping("/pagination")
-	public List<Proveedor> pagination(){
-		return null;
-	}
-	
 	//mostrartodos
-	@RequestMapping("/getall")
-	@ResponseBody
-	public List<Proveedor> getall(){
-		List lst = proveedorService.readAll();
+	@RequestMapping("/getall")	
+	public List<Proveedor> getall(){		
 		return proveedorService.readAll();
 	}
 	
-	
-	//edit
-	@RequestMapping("/edit")
-	public Proveedor edit(@RequestParam("id") Integer id) {
-		return proveedorService.findById(id);
-	}
-	
-	//grabar
 	@RequestMapping("/save")
-	public Proveedor save(Proveedor entidad) {
+	public Proveedor save( @RequestBody Proveedor entidad ) {				
 		return proveedorService.create(entidad);
 	}
 	
-	//update
-	@RequestMapping("/update")
-	public Proveedor update(Proveedor entidad) {
-		return proveedorService.update(entidad);
+	@RequestMapping("/update")	
+	public Proveedor putUdate(@RequestBody Proveedor entidad) {		
+		Proveedor areaUpdate = proveedorService.findbyid(entidad.getIdProveedor()).get();
+			
+		BeanUtils.copyProperties(entidad, areaUpdate);		
+		return proveedorService.create(areaUpdate);
 	}
 	
-	//eliminar
-	@RequestMapping("/delete")
-	public void eliminar(@RequestParam("id") Integer id) {
-		proveedorService.deleteById(id);
+	@RequestMapping("/delete/{id}")
+	@ResponseBody
+	public void delete(@PathVariable Integer id) {		
+		proveedorService.deleteById(id);		
 	}
 	
-	
-	
-	
+	@RequestMapping("/edit/{id}")
+	@ResponseBody
+	public Proveedor getEdit(@PathVariable Integer id) {
+		return proveedorService.findById(id);
+	}	
 }

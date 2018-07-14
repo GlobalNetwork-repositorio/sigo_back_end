@@ -5,11 +5,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.adicse.sigo.model.MedioPago;
 import com.adicse.sigo.repo.IMedioPagoDao;
+import com.adicse.sigo.specification.Filter;
 
 @Service
 @Transactional
@@ -21,16 +23,24 @@ public class MedioPagoService implements IAdicseCustom<MedioPago, Integer>{
 	@Override
 	public MedioPago create(MedioPago entidad) {
 		
-		Integer IdMax = iMedioPagoDao.maxId() == null ? 1 : iMedioPagoDao.maxId() + 1 ;
-		entidad.setIdMedioPago(IdMax);
+		if ( entidad.getIdMedioPago() == 0 ) { 
+			Integer IdMax = iMedioPagoDao.maxId() == null ? 1 : iMedioPagoDao.maxId() + 1 ; 
+			entidad.setIdMedioPago(IdMax);
+		}
 		
-		return iMedioPagoDao.save(entidad);
+		iMedioPagoDao.save(entidad);
+		return entidad;
 	}
 
 	@Override
 	public List<MedioPago> readAll() {
 		// TODO Auto-generated method stub
-		return (List<MedioPago>) iMedioPagoDao.findAll();
+		return (List<MedioPago>) iMedioPagoDao.findAll(sortByIdAsc());
+	}
+	
+	// orden por defecto
+	private Sort sortByIdAsc() {
+	    return new Sort(Sort.Direction.ASC, "idMedioPago");
 	}
 
 	@Override
@@ -73,12 +83,19 @@ public class MedioPagoService implements IAdicseCustom<MedioPago, Integer>{
 
 	@Override
 	public Optional<MedioPago> findbyid(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return iMedioPagoDao.findById(id);
 	}
 
 	@Override
 	public Long count() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Page<?> paginacion(Integer pagenumber, Integer rows, String sortdireccion, String sortcolumn,
+			Filter filter) {
 		// TODO Auto-generated method stub
 		return null;
 	}

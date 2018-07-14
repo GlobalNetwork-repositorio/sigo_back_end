@@ -2,6 +2,9 @@ package com.adicse.sigo.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 
@@ -22,6 +25,7 @@ public class Ingreso implements Serializable {
 	private String detalles;
 
 	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date fecha;
 
 	@Column(name="fecha_registro")
