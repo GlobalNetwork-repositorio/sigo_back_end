@@ -1,16 +1,15 @@
 package com.adicse.sigo.service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.adicse.sigo.model.Cuenta;
-import com.adicse.sigo.model.Egreso;
 import com.adicse.sigo.repo.ICuentaDao;
 import com.adicse.sigo.specification.Filter;
 
@@ -22,16 +21,25 @@ public class CuentaService implements IAdicseCustom<Cuenta, Integer> {
 	private ICuentaDao iCuentaDao;
 
 	@Override
-	public Cuenta create(Cuenta entidad) {
-		Integer IdMax = iCuentaDao.maxId() == null ? 1 : iCuentaDao.maxId() + 1 ;
-		entidad.setIdCuenta(IdMax);
-		return iCuentaDao.save(entidad);
+	public Cuenta create(Cuenta entidad) {		
+		if ( entidad.getIdCuenta() == 0 ) { 
+			Integer IdMax = iCuentaDao.maxId() == null ? 1 : iCuentaDao.maxId() + 1 ; 
+			entidad.setIdCuenta(IdMax);
+		}
+		
+		iCuentaDao.save(entidad);
+		return entidad;
 	}
 
 	@Override
 	public List<Cuenta> readAll() {
-		// TODO Auto-generated method stub
-		return (List<Cuenta>) iCuentaDao.findAll();
+		// TODO Auto-generated method stub		
+		return (List<Cuenta>) iCuentaDao.findAll(sortByIdAsc());
+	}
+	
+	// orden por defecto
+	private Sort sortByIdAsc() {
+	    return new Sort(Sort.Direction.ASC, "idCuenta");
 	}
 
 	@Override
@@ -74,8 +82,7 @@ public class CuentaService implements IAdicseCustom<Cuenta, Integer> {
 
 	@Override
 	public Optional<Cuenta> findbyid(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return iCuentaDao.findById(id);
 	}
 
 	@Override
