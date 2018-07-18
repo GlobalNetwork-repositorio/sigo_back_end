@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
+import com.adicse.sigo.model.Rubro;
 import com.adicse.sigo.specification.Filter;
 
 public interface IAdicseCustom <T, ID>{
@@ -31,6 +32,7 @@ public interface IAdicseCustom <T, ID>{
 	
 	public Optional<T> findbyid(ID id);
 	
-	public Long count();	
+	public Long count();
+	
 
 }

@@ -36,6 +36,10 @@ public class Proveedor implements Serializable {
 	@OneToMany(mappedBy="proveedor")
 	private List<Egreso> egresos;
 
+	//bi-directional many-to-one association to ProveedorDetalle
+	@OneToMany(mappedBy="proveedor")
+	private List<ProveedorDetalle> proveedorDetalles;
+
 	public Proveedor() {
 	}
 
@@ -115,6 +119,28 @@ public class Proveedor implements Serializable {
 		egreso.setProveedor(null);
 
 		return egreso;
+	}
+
+	public List<ProveedorDetalle> getProveedorDetalles() {
+		return this.proveedorDetalles;
+	}
+
+	public void setProveedorDetalles(List<ProveedorDetalle> proveedorDetalles) {
+		this.proveedorDetalles = proveedorDetalles;
+	}
+
+	public ProveedorDetalle addProveedorDetalle(ProveedorDetalle proveedorDetalle) {
+		getProveedorDetalles().add(proveedorDetalle);
+		proveedorDetalle.setProveedor(this);
+
+		return proveedorDetalle;
+	}
+
+	public ProveedorDetalle removeProveedorDetalle(ProveedorDetalle proveedorDetalle) {
+		getProveedorDetalles().remove(proveedorDetalle);
+		proveedorDetalle.setProveedor(null);
+
+		return proveedorDetalle;
 	}
 
 }

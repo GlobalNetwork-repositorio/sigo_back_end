@@ -40,9 +40,6 @@ public class EgresoService implements IAdicseCustom<Egreso, Integer> {
 	@Autowired
 	private FuncionesUtilesService funcionesUtiles;
 	
-	@Autowired
-	private ConvertObjectToFormatJson convertObjectToFormatJson;
-
 	@Override
 	public Egreso create(Egreso entidad) {
 		Integer IdMax = iEgresoDao.maxId() == null ? 1 : iEgresoDao.maxId() + 1 ;

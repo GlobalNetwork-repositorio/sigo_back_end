@@ -1,4 +1,5 @@
 package com.adicse.sigo.model;
+
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -23,11 +24,11 @@ public class Egreso implements Serializable {
 
 	private String detalles;
 
-	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern="dd/MM/yyyy")
+	// @Temporal(TemporalType.DATE)
+	@JsonFormat (pattern ="dd/MM/yyyy", timezone="EST")
 	private Date fecha;
 
-	@Column(name="fecha_registro")
+	@Column(name="fecha_registro")	
 	private String fechaRegistro;
 
 	private String hora;
@@ -36,10 +37,10 @@ public class Egreso implements Serializable {
 
 	private float monto;
 
-	//bi-directional many-to-one association to ConceptoEgreso
+	//bi-directional many-to-one association to ConceptoRegistro
 	@ManyToOne
-	@JoinColumn(name="id_concepto_egreso")
-	private ConceptoEgreso conceptoEgreso;
+	@JoinColumn(name="id_concepto_registro")
+	private ConceptoRegistro conceptoRegistro;
 
 	//bi-directional many-to-one association to Cuenta
 	@ManyToOne
@@ -125,12 +126,12 @@ public class Egreso implements Serializable {
 		this.monto = monto;
 	}
 
-	public ConceptoEgreso getConceptoEgreso() {
-		return this.conceptoEgreso;
+	public ConceptoRegistro getConceptoRegistro() {
+		return this.conceptoRegistro;
 	}
 
-	public void setConceptoEgreso(ConceptoEgreso conceptoEgreso) {
-		this.conceptoEgreso = conceptoEgreso;
+	public void setConceptoRegistro(ConceptoRegistro conceptoRegistro) {
+		this.conceptoRegistro = conceptoRegistro;
 	}
 
 	public Cuenta getCuenta() {

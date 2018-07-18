@@ -6,13 +6,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.adicse.sigo.model.Egreso;
 import com.adicse.sigo.service.EgresoService;
+import com.adicse.sigo.specification.ConvertObjectToFormatJson;
 import com.adicse.sigo.specification.Filter;
 
 import org.springframework.web.bind.annotation.*;
@@ -26,18 +23,47 @@ public class EgresoController {
 
 	@Autowired
 	private EgresoService egresoService;
+	
+	@Autowired
+	private ConvertObjectToFormatJson convertObjectToFormatJson;
 
+//	@PostMapping("/paginacion")
+//    public Map<String,Object>  paginar(
+//    		@RequestParam("pagenumber") Integer pagenumber,
+//			@RequestParam("rows") Integer rows,
+//			@RequestParam("sortdireccion") String sortdireccion,
+//			@RequestParam("sortcolumn") String sortcolumn,
+//			@RequestBody Filter filter
+//    		){
+//		
+//		// Filter f = convertObjectToFormatJson.ConvertObjectToFormatSpecification(filter);
+//		// Filter f = (Filter) filter;
+//		Map<String,Object> response = new HashMap<String, Object>();
+//		
+//		Page<Egreso> page =  egresoService.paginacion(pagenumber, rows, sortdireccion, sortcolumn, filter);
+//		List<Egreso> lst = page.getContent();
+//		
+//		response.put("data", lst);
+//		response.put("totalPages", page.getTotalPages());
+//		response.put("success", true);
+//		response.put("totalCount", page.getTotalElements());
+//		
+//		return response; 
+//    }
+	
 	@PostMapping("/paginacion")
     public Map<String,Object>  paginar(
     		@RequestParam("pagenumber") Integer pagenumber,
 			@RequestParam("rows") Integer rows,
 			@RequestParam("sortdireccion") String sortdireccion,
 			@RequestParam("sortcolumn") String sortcolumn,
-			@RequestBody Filter filter
+			@RequestBody Object f	
     		){
 		
-		// Filter f = convertObjectToFormatJson.ConvertObjectToFormatSpecification(filter);
-		// Filter f = (Filter) filter;
+		// @RequestBody Object f
+		
+		Filter filter = convertObjectToFormatJson.ConvertObjectToFormatSpecification(f);
+		
 		Map<String,Object> response = new HashMap<String, Object>();
 		
 		Page<Egreso> page =  egresoService.paginacion(pagenumber, rows, sortdireccion, sortcolumn, filter);

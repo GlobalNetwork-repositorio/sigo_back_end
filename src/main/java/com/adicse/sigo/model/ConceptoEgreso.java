@@ -2,7 +2,6 @@ package com.adicse.sigo.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
@@ -21,10 +20,6 @@ public class ConceptoEgreso implements Serializable {
 
 	private String descripcion;
 
-	//bi-directional many-to-one association to Egreso
-	@OneToMany(mappedBy="conceptoEgreso")
-	private List<Egreso> egresos;
-
 	public ConceptoEgreso() {
 	}
 
@@ -42,28 +37,6 @@ public class ConceptoEgreso implements Serializable {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-
-	public List<Egreso> getEgresos() {
-		return this.egresos;
-	}
-
-	public void setEgresos(List<Egreso> egresos) {
-		this.egresos = egresos;
-	}
-
-	public Egreso addEgreso(Egreso egreso) {
-		getEgresos().add(egreso);
-		egreso.setConceptoEgreso(this);
-
-		return egreso;
-	}
-
-	public Egreso removeEgreso(Egreso egreso) {
-		getEgresos().remove(egreso);
-		egreso.setConceptoEgreso(null);
-
-		return egreso;
 	}
 
 }
