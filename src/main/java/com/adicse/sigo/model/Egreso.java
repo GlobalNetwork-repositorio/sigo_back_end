@@ -6,6 +6,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -22,13 +23,15 @@ public class Egreso implements Serializable {
 	@Column(name="id_egreso")
 	private Integer idEgreso;
 
+	private String cerrado;
+
 	private String detalles;
 
 	// @Temporal(TemporalType.DATE)
 	@JsonFormat (pattern ="dd/MM/yyyy", timezone="EST")
 	private Date fecha;
 
-	@Column(name="fecha_registro")	
+	@Column(name="fecha_registro")
 	private String fechaRegistro;
 
 	private String hora;
@@ -67,6 +70,10 @@ public class Egreso implements Serializable {
 	@JoinColumn(name="id_usuario")
 	private Usuario usuario;
 
+	//bi-directional many-to-one association to EgresosHistorialModificacion
+	@OneToMany(mappedBy="egreso")
+	private List<EgresosHistorialModificacion> egresosHistorialModificacions;
+
 	public Egreso() {
 	}
 
@@ -76,6 +83,14 @@ public class Egreso implements Serializable {
 
 	public void setIdEgreso(Integer idEgreso) {
 		this.idEgreso = idEgreso;
+	}
+
+	public String getCerrado() {
+		return this.cerrado;
+	}
+
+	public void setCerrado(String cerrado) {
+		this.cerrado = cerrado;
 	}
 
 	public String getDetalles() {
@@ -172,6 +187,28 @@ public class Egreso implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public List<EgresosHistorialModificacion> getEgresosHistorialModificacions() {
+		return this.egresosHistorialModificacions;
+	}
+
+	public void setEgresosHistorialModificacions(List<EgresosHistorialModificacion> egresosHistorialModificacions) {
+		this.egresosHistorialModificacions = egresosHistorialModificacions;
+	}
+
+	public EgresosHistorialModificacion addEgresosHistorialModificacion(EgresosHistorialModificacion egresosHistorialModificacion) {
+		getEgresosHistorialModificacions().add(egresosHistorialModificacion);
+		egresosHistorialModificacion.setEgreso(this);
+
+		return egresosHistorialModificacion;
+	}
+
+	public EgresosHistorialModificacion removeEgresosHistorialModificacion(EgresosHistorialModificacion egresosHistorialModificacion) {
+		getEgresosHistorialModificacions().remove(egresosHistorialModificacion);
+		egresosHistorialModificacion.setEgreso(null);
+
+		return egresosHistorialModificacion;
 	}
 
 }

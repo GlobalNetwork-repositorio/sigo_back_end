@@ -1,10 +1,7 @@
 package com.adicse.sigo.model;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-
 import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;

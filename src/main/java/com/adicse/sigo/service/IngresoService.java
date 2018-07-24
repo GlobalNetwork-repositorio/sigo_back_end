@@ -31,12 +31,13 @@ public class IngresoService implements IAdicseCustom<Ingreso, Integer>{
 	private FuncionesUtilesService funcionesUtiles;	
 	
 	@Override
-	public Ingreso create(Ingreso entidad) {
+	public Ingreso create(Ingreso entidad) {		
+		if ( entidad.getIdIngreso() == 0 ) {
+			Integer IdMax = iIngresoDao.maxId() == null ? 1 : iIngresoDao.maxId() + 1 ; 
+			entidad.setIdIngreso(IdMax);
+		}
 		
-		Integer IdMax = iIngresoDao.maxId() == null ? 1 : iIngresoDao.maxId() + 1 ;
-		entidad.setFechaRegistro(funcionesUtiles.getFechaActual().toString() + " " + funcionesUtiles.getHoraActual());
-		entidad.setIdIngreso(IdMax);
-		
+		entidad.setFechaRegistro(funcionesUtiles.getFechaActual().toString() + " " + funcionesUtiles.getHoraActual());			
 		return iIngresoDao.save(entidad);
 	}
 

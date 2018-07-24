@@ -21,7 +21,6 @@ import com.adicse.sigo.model.Egreso;
 import com.adicse.sigo.repo.IEgresoDao;
 import com.adicse.sigo.utilitarios.FuncionesUtilesService;
 
-import com.adicse.sigo.specification.ConvertObjectToFormatJson;
 import com.adicse.sigo.specification.Filter;
 import static com.adicse.sigo.specification.SpecificationBuilder.selectFrom;
 
@@ -42,10 +41,12 @@ public class EgresoService implements IAdicseCustom<Egreso, Integer> {
 	
 	@Override
 	public Egreso create(Egreso entidad) {
-		Integer IdMax = iEgresoDao.maxId() == null ? 1 : iEgresoDao.maxId() + 1 ;
+		if ( entidad.getIdEgreso() == 0 ) {
+			Integer IdMax = iEgresoDao.maxId() == null ? 1 : iEgresoDao.maxId() + 1 ; 
+			entidad.setIdEgreso(IdMax);
+		}
 				
-		entidad.setFechaRegistro(funcionesUtiles.getFechaActual().toString() + " " + funcionesUtiles.getHoraActual());
-		entidad.setIdEgreso(IdMax);
+		entidad.setFechaRegistro(funcionesUtiles.getFechaActual().toString() + " " + funcionesUtiles.getHoraActual());		
 		
 		return iEgresoDao.save(entidad);
 	}	
@@ -106,8 +107,7 @@ public class EgresoService implements IAdicseCustom<Egreso, Integer> {
 
 	@Override
 	public Optional<Egreso> findbyid(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return iEgresoDao.findById(id);
 	}
 
 	@Override

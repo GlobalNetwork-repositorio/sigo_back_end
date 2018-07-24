@@ -6,6 +6,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -22,10 +23,12 @@ public class Ingreso implements Serializable {
 	@Column(name="id_ingreso")
 	private Integer idIngreso;
 
+	private String cerrado;
+
 	private String detalles;
 
-	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern="dd/MM/yyyy")
+	// @Temporal(TemporalType.DATE)
+	@JsonFormat (pattern ="dd/MM/yyyy", timezone="EST")
 	private Date fecha;
 
 	@Column(name="fecha_registro")
@@ -36,10 +39,10 @@ public class Ingreso implements Serializable {
 	@Column(name="monto_ingresado")
 	private float montoIngresado;
 
-	//bi-directional many-to-one association to ConceptoIngreso
+	//bi-directional many-to-one association to ConceptoRegistro
 	@ManyToOne
-	@JoinColumn(name="id_concepto_ingreso")
-	private ConceptoIngreso conceptoIngreso;
+	@JoinColumn(name="id_concepto_registro")
+	private ConceptoRegistro conceptoRegistro;
 
 	//bi-directional many-to-one association to Cuenta
 	@ManyToOne
@@ -61,6 +64,10 @@ public class Ingreso implements Serializable {
 	@JoinColumn(name="id_usuario")
 	private Usuario usuario;
 
+	//bi-directional many-to-one association to IngresosHistorialModificacion
+	@OneToMany(mappedBy="ingreso")
+	private List<IngresosHistorialModificacion> ingresosHistorialModificacions;
+
 	public Ingreso() {
 	}
 
@@ -70,6 +77,14 @@ public class Ingreso implements Serializable {
 
 	public void setIdIngreso(Integer idIngreso) {
 		this.idIngreso = idIngreso;
+	}
+
+	public String getCerrado() {
+		return this.cerrado;
+	}
+
+	public void setCerrado(String cerrado) {
+		this.cerrado = cerrado;
 	}
 
 	public String getDetalles() {
@@ -112,12 +127,12 @@ public class Ingreso implements Serializable {
 		this.montoIngresado = montoIngresado;
 	}
 
-	public ConceptoIngreso getConceptoIngreso() {
-		return this.conceptoIngreso;
+	public ConceptoRegistro getConceptoRegistro() {
+		return this.conceptoRegistro;
 	}
 
-	public void setConceptoIngreso(ConceptoIngreso conceptoIngreso) {
-		this.conceptoIngreso = conceptoIngreso;
+	public void setConceptoRegistro(ConceptoRegistro conceptoRegistro) {
+		this.conceptoRegistro = conceptoRegistro;
 	}
 
 	public Cuenta getCuenta() {
@@ -150,6 +165,28 @@ public class Ingreso implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public List<IngresosHistorialModificacion> getIngresosHistorialModificacions() {
+		return this.ingresosHistorialModificacions;
+	}
+
+	public void setIngresosHistorialModificacions(List<IngresosHistorialModificacion> ingresosHistorialModificacions) {
+		this.ingresosHistorialModificacions = ingresosHistorialModificacions;
+	}
+
+	public IngresosHistorialModificacion addIngresosHistorialModificacion(IngresosHistorialModificacion ingresosHistorialModificacion) {
+		getIngresosHistorialModificacions().add(ingresosHistorialModificacion);
+		ingresosHistorialModificacion.setIngreso(this);
+
+		return ingresosHistorialModificacion;
+	}
+
+	public IngresosHistorialModificacion removeIngresosHistorialModificacion(IngresosHistorialModificacion ingresosHistorialModificacion) {
+		getIngresosHistorialModificacions().remove(ingresosHistorialModificacion);
+		ingresosHistorialModificacion.setIngreso(null);
+
+		return ingresosHistorialModificacion;
 	}
 
 }

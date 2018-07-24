@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.adicse.sigo.model.Area;
 import com.adicse.sigo.model.Cuenta;
-import com.adicse.sigo.model.Sucursal;
 import com.adicse.sigo.service.CuentaService;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -52,5 +50,4 @@ public class CuentaController {
 	public Cuenta getEdit(@PathVariable Integer id) {
 		return cuentaService.findById(id);
 	}
-
 }

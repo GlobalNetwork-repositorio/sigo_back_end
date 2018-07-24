@@ -1,6 +1,5 @@
 package com.adicse.sigo.model;
 
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
@@ -31,6 +30,11 @@ public class Cuenta implements Serializable {
 	@Column(name="titular_cuenta")
 	private String titularCuenta;
 
+	//bi-directional many-to-one association to Moneda
+	@ManyToOne
+	@JoinColumn(name="id_moneda")
+	private Moneda moneda;
+
 	//bi-directional many-to-one association to Egreso
 	@OneToMany(mappedBy="cuenta")
 	private List<Egreso> egresos;
@@ -38,11 +42,6 @@ public class Cuenta implements Serializable {
 	//bi-directional many-to-one association to Ingreso
 	@OneToMany(mappedBy="cuenta")
 	private List<Ingreso> ingresos;
-
-	//bi-directional many-to-one association to Moneda
-	@ManyToOne
-	@JoinColumn(name="id_moneda")
-	private Moneda moneda;
 
 	public Cuenta() {
 	}
@@ -87,6 +86,14 @@ public class Cuenta implements Serializable {
 		this.titularCuenta = titularCuenta;
 	}
 
+	public Moneda getMoneda() {
+		return this.moneda;
+	}
+
+	public void setMoneda(Moneda moneda) {
+		this.moneda = moneda;
+	}
+
 	public List<Egreso> getEgresos() {
 		return this.egresos;
 	}
@@ -129,14 +136,6 @@ public class Cuenta implements Serializable {
 		ingreso.setCuenta(null);
 
 		return ingreso;
-	}
-
-	public Moneda getMoneda() {
-		return this.moneda;
-	}
-
-	public void setMoneda(Moneda moneda) {
-		this.moneda = moneda;
 	}
 
 }
